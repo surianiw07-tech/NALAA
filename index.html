@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathSpace by Bu Afifah - Platform Pembelajaran Matematika Interaktif</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#3B82F6',
+                            purple: '#6366F1',
+                            orange: '#FF7A18',
+                            teal: '#00A86B',
+                            bgLight: '#F3F6FD',
+                            cardBg: '#FFFFFF',
+                            darkBlue: '#1E3A8A'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        hand: ['Caveat', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #F3F6FD;
+            color: #1E293B;
+        }
+        .bg-gradient-hero {
+            background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 50%, #60A5FA 100%);
+        }
+        .bg-gradient-brand {
+            background: linear-gradient(135deg, #2563EB 0%, #3B82F6 100%);
+        }
+        .cartesian-canvas {
+            background-color: #0F172A;
+            border-radius: 1rem;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+            cursor: crosshair;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #93C5FD;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-blue-500 selection:text-white">
+
+    <div id="app" class="min-h-screen flex flex-col">
+
+        <!-- ========================================== -->
+        <!-- 1. LANDING PAGE VIEW                       -->
+        <!-- ========================================== -->
+        <section id="view-landing" class="view-section flex-1 flex flex-col">
+            <header class="bg-white border-b border-blue-100 sticky top-0 z-40 shadow-sm">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                    <div class="flex items-center gap-3 cursor-pointer" onclick="showView('view-landing')">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-blue-400 flex items-center justify-center text-white font-bold text-xl shadow-md">
+                            <i class="fa-solid fa-shapes"></i>
+                        </div>
+                        <div>
+                            <h1 class="font-extrabold text-lg text-blue-600 tracking-tight leading-none">MathSpace</h1>
+                            <span class="text-xs text-slate-400 font-medium">by Bu Afifah</span>
+                        </div>
+                    </div>
+                    <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-slate-600">
+                        <a href="#beranda" class="hover:text-blue-600 transition-colors">Beranda</a>
+                        <a href="#keunggulan" class="hover:text-blue-600 transition-colors">Fitur Utama</a>
+                        <a href="#profil" class="hover:text-blue-600 transition-colors">Profil Guru</a>
+                    </nav>
+                    <div class="flex items-center gap-3">
+                        <button onclick="openModal('modal-login-siswa')" class="px-5 py-2.5 rounded-xl bg-brand-orange hover:bg-orange-600 font-bold text-sm text-white shadow-md transition-all">
+                            <i class="fa-solid fa-user-graduate mr-1.5"></i> Masuk Siswa
+                        </button>
+                        <button onclick="openModal('modal-login-guru')" class="px-5 py-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-600 font-bold text-sm transition-all">
+                            <i class="fa-solid fa-user-shield mr-1.5"></i> Portal Guru
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Hero Section -->
+            <div id="beranda" class="bg-gradient-hero text-white py-20 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
+                <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+                    <span class="px-4 py-1.5 rounded-full bg-white/20 text-white text-xs font-extrabold uppercase tracking-wider backdrop-blur-md">
+                        <i class="fa-solid fa-star text-amber-300 mr-1"></i> Interactive Geometry Learning
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+                        Selamat Datang di Platform Pembelajaran Bu Afifah
+                    </h1>
+                    <p class="text-lg sm:text-xl text-blue-100 font-normal max-w-2xl mx-auto">
+                        Belajar Matematika Interaktif, Temukan Pola Geometrinya, Kuasai Transformasinya Kapan Saja &amp; Di Mana Saja!
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-4 pt-6">
+                        <button onclick="openModal('modal-login-siswa')" class="px-8 py-4 rounded-full bg-brand-orange hover:bg-orange-600 text-white font-bold text-base shadow-lg transition-all transform hover:-translate-y-0.5">
+                            Masuk Sebagai Siswa
+                        </button>
+                        <button onclick="openModal('modal-login-guru')" class="px-8 py-4 rounded-full bg-white text-blue-600 hover:bg-blue-50 font-bold text-base shadow-lg transition-all transform hover:-translate-y-0.5">
+                            Masuk Sebagai Guru
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Keunggulan Section -->
+            <div id="keunggulan" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+                <h2 class="text-3xl font-extrabold text-center text-slate-800 mb-12">Keunggulan MathSpace</h2>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white p-8 rounded-2xl border border-blue-100 shadow-sm text-center space-y-4 hover:shadow-md transition-all">
+                        <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl mx-auto">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-800">Bahan Ajar Terintegrasi</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">Materi PDF, video Google Drive, &amp; modul langsung diperbarui oleh guru.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl border border-blue-100 shadow-sm text-center space-y-4 hover:shadow-md transition-all">
+                        <div class="w-12 h-12 rounded-xl bg-amber-100 text-brand-orange flex items-center justify-center text-2xl mx-auto">
+                            <i class="fa-solid fa-draw-polygon"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-800">Lab Kartesius &amp; Translasi</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">Simulasi pergeseran titik &amp; polygon pada bidang koordinat nyata.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl border border-blue-100 shadow-sm text-center space-y-4 hover:shadow-md transition-all">
+                        <div class="w-12 h-12 rounded-xl bg-teal-100 text-brand-teal flex items-center justify-center text-2xl mx-auto">
+                            <i class="fa-solid fa-stopwatch"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-800">Kuis Real-Time &amp; Presensi</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">Fitur Kuis Online terkontrol serta sistem Presensi Kehadiran transparan.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl border border-blue-100 shadow-sm text-center space-y-4 hover:shadow-md transition-all">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-100 text-brand-purple flex items-center justify-center text-2xl mx-auto">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-800">Papan Peringkat Kelas</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">Klasemen real-time berdasarkan akurasi jawaban dan kecepatan waktu pengerjaan.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="bg-white border-t border-blue-100 py-6 text-center text-xs text-slate-500 mt-auto">
+                <p>MathSpace by Bu Afifah © 2026</p>
+                <p class="mt-1 text-slate-400">Pengampu: Afifah Dwi Ramadhani, S.Pd., M.Pd. | Platform Pembelajaran Matematika SMP</p>
+            </footer>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 2. MODAL AUTHENTICATION                    -->
+        <!-- ========================================== -->
+        <!-- Modal Login Siswa -->
+        <div id="modal-login-siswa" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+            <div class="bg-white w-full max-w-md rounded-3xl p-8 shadow-2xl border border-blue-100 relative">
+                <button onclick="closeModal('modal-login-siswa')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+                <div class="text-center mb-6">
+                    <div class="w-14 h-14 rounded-2xl bg-orange-100 text-brand-orange flex items-center justify-center text-2xl mx-auto mb-3">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-800">Masuk Sebagai Siswa</h3>
+                    <p class="text-xs text-slate-500 mt-1">Pilih nama terdaftar atau ketik nama lengkapmu</p>
+                </div>
+                <form onsubmit="handleLoginSiswa(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Pilih Nama Terdaftar</label>
+                        <select id="select-siswa-name" onchange="syncSiswaInput(this.value)" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm">
+                            <option value="">-- Pilih Nama Siswa --</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Atau Ketik Nama Lengkap</label>
+                        <input type="text" id="input-siswa-name" required placeholder="Masukkan Nama Lengkap" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm">
+                    </div>
+                    <button type="submit" class="w-full py-3.5 bg-brand-orange hover:bg-orange-600 text-white font-bold rounded-xl shadow-md transition-all">
+                        Mulai Belajar Sekarang <i class="fa-solid fa-arrow-right ml-1.5"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal Login Guru (PIN: 262626) -->
+        <div id="modal-login-guru" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+            <div class="bg-white w-full max-w-md rounded-3xl p-8 shadow-2xl border border-blue-100 relative">
+                <button onclick="closeModal('modal-login-guru')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+                <div class="text-center mb-6">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl mx-auto mb-3">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-800">Masuk Portal Guru</h3>
+                    <p class="text-xs text-slate-500 mt-1">Masukkan PIN Otentikasi Guru Pengampu (Default: 262626)</p>
+                </div>
+                <form onsubmit="handleLoginGuru(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">PIN Akses Guru</label>
+                        <input type="password" id="input-pin-guru" required placeholder="Masukkan PIN Rahasia Guru" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-center tracking-widest text-lg font-bold">
+                    </div>
+                    <p id="error-pin-guru" class="text-xs text-red-500 font-semibold text-center hidden">PIN Salah! Silakan periksa kembali.</p>
+                    <button type="submit" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition-all">
+                        Verifikasi &amp; Masuk Portal Guru
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 3. DASHBOARD SISWA                         -->
+        <!-- ========================================== -->
+        <section id="view-dashboard-siswa" class="view-section flex-1 hidden">
+            <header class="bg-white border-b border-blue-100 sticky top-0 z-30 shadow-sm">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                    <div class="flex items-center gap-3 cursor-pointer" onclick="showView('view-landing')">
+                        <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 flex items-center justify-center text-white font-bold text-lg shadow-sm">
+                            <i class="fa-solid fa-shapes"></i>
+                        </div>
+                        <span class="font-extrabold text-base text-blue-600">MathSpace Siswa</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-2 bg-blue-50 px-3 py-1.5 rounded-full border border-blue-100">
+                            <i class="fa-solid fa-circle-user text-blue-600"></i>
+                            <span id="label-nama-siswa" class="text-xs font-bold text-slate-700">-</span>
+                        </div>
+                        <button onclick="logout()" class="text-xs text-red-500 hover:text-red-600 font-semibold flex items-center gap-1">
+                            <i class="fa-solid fa-right-from-bracket"></i> Keluar
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+                <!-- Welcome Banner -->
+                <div class="bg-gradient-brand rounded-3xl p-8 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="space-y-2 max-w-xl z-10">
+                        <span class="px-3 py-1 bg-white/20 text-white rounded-full text-xs font-bold backdrop-blur-md">Ruang Pembelajaran Transformasi Geometri</span>
+                        <h2 class="text-3xl font-extrabold">Halo, <span id="welcome-nama-siswa">Siswa</span>! 👋</h2>
+                        <p class="text-blue-100 text-sm leading-relaxed">Silakan akses bahan ajar terintegrasi, uji kemampuan di lab Kartesius, kerjakan latihan mandiri, atau ikuti Kuis Online yang diaktifkan guru.</p>
+                    </div>
+                    <div class="flex gap-3 z-10">
+                        <button onclick="switchTabSiswa('materi')" class="px-5 py-3 rounded-2xl bg-white text-blue-600 font-bold text-xs shadow-md hover:bg-blue-50 transition-all">
+                            <i class="fa-solid fa-book-open mr-1.5"></i> Bahan Ajar Guru
+                        </button>
+                        <button onclick="switchTabSiswa('quiz')" class="px-5 py-3 rounded-2xl bg-brand-orange text-white font-bold text-xs shadow-md hover:bg-orange-600 transition-all">
+                            <i class="fa-solid fa-gamepad mr-1.5"></i> Masuk Kuis
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs Siswa -->
+                <div class="flex gap-2 border-b border-blue-100 pb-2 overflow-x-auto custom-scrollbar">
+                    <button onclick="switchTabSiswa('materi')" id="tab-btn-materi" class="tab-btn-siswa px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 bg-blue-600 text-white shadow-sm">
+                        <i class="fa-solid fa-book-open"></i> Bahan Ajar &amp; Modul
+                    </button>
+                    <button onclick="switchTabSiswa('cartesian')" id="tab-btn-cartesian" class="tab-btn-siswa px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 bg-white text-slate-600 hover:bg-blue-50">
+                        <i class="fa-solid fa-chart-line"></i> Lab Kartesius &amp; Translasi
+                    </button>
+                    <button onclick="switchTabSiswa('latihan')" id="tab-btn-latihan" class="tab-btn-siswa px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 bg-white text-slate-600 hover:bg-blue-50">
+                        <i class="fa-solid fa-file-pen"></i> Latihan Soal
+                    </button>
+                    <button onclick="switchTabSiswa('quiz')" id="tab-btn-quiz" class="tab-btn-siswa px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 bg-white text-slate-600 hover:bg-blue-50">
+                        <i class="fa-solid fa-stopwatch"></i> Kuis Online (Live)
+                    </button>
+                    <button onclick="switchTabSiswa('leaderboard')" id="tab-btn-leaderboard" class="tab-btn-siswa px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 bg-white text-slate-600 hover:bg-blue-50">
+                        <i class="fa-solid fa-trophy"></i> Peringkat Kuis
+                    </button>
+                </div>
+
+                <!-- TAB 1: BAHAN AJAR -->
+                <div id="tab-content-materi" class="tab-siswa-content space-y-6">
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="container-materi-list">
+                        <!-- Loaded via JS -->
+                    </div>
+                </div>
+
+                <!-- TAB 2: LAB CARTESIAN SIMULATION -->
+                <div id="tab-content-cartesian" class="tab-siswa-content space-y-6 hidden">
+                    <div class="bg-white rounded-3xl p-6 border border-blue-100 shadow-sm space-y-6">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-4">
+                            <div>
+                                <h3 class="font-bold text-lg text-slate-800">Simulasi Interaktif Kartesius &amp; Translasi T(a,b)</h3>
+                                <p class="text-xs text-slate-500">Klik titik pada bidang Kartesius untuk membentuk polygon dan melihat pergeserannya.</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="clearCanvasPoints()" class="px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-xl font-bold text-xs transition-all">
+                                    <i class="fa-solid fa-trash mr-1"></i> Reset Grid
+                                </button>
+                                <button onclick="drawCartesianGrid()" class="px-4 py-2 bg-brand-orange text-white hover:bg-orange-600 rounded-xl font-bold text-xs shadow-sm transition-all">
+                                    <i class="fa-solid fa-play mr-1"></i> Render Vektor T(a,b)
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="grid lg:grid-cols-3 gap-6">
+                            <div class="lg:col-span-2 flex flex-col items-center justify-center bg-slate-900 rounded-2xl p-4 overflow-hidden shadow-inner">
+                                <canvas id="cartesianCanvas" width="500" height="500" class="cartesian-canvas max-w-full h-auto"></canvas>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="bg-blue-50/60 rounded-2xl p-5 border border-blue-100 space-y-3">
+                                    <h4 class="font-bold text-sm text-blue-900">Vektor Pergeseran T(a, b)</h4>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Pergeseran X (a)</label>
+                                            <input type="number" id="shift-a" value="3" onchange="drawCartesianGrid()" class="w-full px-3 py-2 border border-slate-200 rounded-xl font-mono text-center font-bold text-sm">
+                                        </div>
+                                        <div>
+                                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Pergeseran Y (b)</label>
+                                            <input type="number" id="shift-b" value="2" onchange="drawCartesianGrid()" class="w-full px-3 py-2 border border-slate-200 rounded-xl font-mono text-center font-bold text-sm">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white rounded-2xl p-5 border border-slate-200 space-y-2">
+                                    <h4 class="font-bold text-sm text-slate-800 flex items-center gap-2">
+                                        <i class="fa-solid fa-location-dot text-brand-orange"></i> Koordinat Asal &amp; Bayangan
+                                    </h4>
+                                    <div id="list-cartesian-points" class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar text-xs text-slate-600">
+                                        <p class="text-slate-400 italic">Klik pada bidang grid untuk menambahkan titik!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: LATIHAN SOAL SISWA -->
+                <div id="tab-content-latihan" class="tab-siswa-content space-y-6 hidden">
+                    <div class="bg-white rounded-3xl p-6 border border-blue-100 shadow-sm space-y-6">
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+                            <div>
+                                <h3 class="font-bold text-lg text-slate-800">Modul Latihan Soal Mandiri</h3>
+                                <p class="text-xs text-slate-500">Kerjakan soal pilihan ganda latihan di bawah ini untuk mengasah pemahamanmu.</p>
+                            </div>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-700 font-bold text-xs rounded-full">Latihan Mandiri</span>
+                        </div>
+                        <div id="container-latihan-siswa" class="space-y-6">
+                            <!-- JS render latihan -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: KUIS ONLINE SISWA -->
+                <div id="tab-content-quiz" class="tab-siswa-content space-y-6 hidden">
+                    <div class="bg-white rounded-3xl p-6 border border-blue-100 shadow-sm space-y-6">
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+                            <div>
+                                <h3 class="font-bold text-lg text-slate-800">Kuis Online Evaluasi Pembelajaran</h3>
+                                <p class="text-xs text-slate-500">Kuis hanya dapat dikerjakan apabila status Kuis telah diaktifkan oleh Guru.</p>
+                            </div>
+                            <span id="quiz-status-badge-siswa" class="px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-600">
+                                Status: NONAKTIF
+                            </span>
+                        </div>
+
+                        <!-- Panel Saat Kuis Non-Aktif -->
+                        <div id="quiz-inactive-box" class="text-center py-12 space-y-4">
+                            <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-2xl mx-auto">
+                                <i class="fa-solid fa-lock"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-700 text-lg">Kuis Belum Dibuka</h4>
+                            <p class="text-xs text-slate-500 max-w-md mx-auto">Bu Afifah belum mengaktifkan sesi Kuis. Silakan tunggu instruksi dari guru untuk mengaktifkannya dari Portal Guru.</p>
+                        </div>
+
+                        <!-- Panel Saat Kuis Aktif -->
+                        <div id="quiz-active-box" class="hidden space-y-6">
+                            <div class="flex justify-between items-center bg-blue-50 p-4 rounded-2xl border border-blue-100">
+                                <span class="text-xs font-bold text-blue-800"><i class="fa-solid fa-stopwatch mr-1"></i> Waktu Pengerjaan Terhitung Real-time</span>
+                                <span id="quiz-timer-display" class="font-mono font-bold text-sm bg-blue-600 text-white px-3 py-1 rounded-lg">00:00</span>
+                            </div>
+
+                            <div id="quiz-questions-container" class="space-y-6">
+                                <!-- JS Render Soal Kuis -->
+                            </div>
+
+                            <button onclick="submitQuizSiswa()" class="w-full py-4 bg-brand-orange hover:bg-orange-600 text-white font-bold rounded-2xl shadow-lg transition-all text-sm">
+                                <i class="fa-solid fa-paper-plane mr-2"></i> Kirim Jawaban Kuis Saya
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 5: LEADERBOARD / LEADERBOARD KUIS SISWA -->
+                <div id="tab-content-leaderboard" class="tab-siswa-content space-y-6 hidden">
+                    <div class="bg-white rounded-3xl p-6 border border-blue-100 shadow-sm space-y-6">
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+                            <div>
+                                <h3 class="font-bold text-lg text-slate-800">Papan Peringkat Kuis Klasemen Siswa</h3>
+                                <p class="text-xs text-slate-500">Peringkat diurutkan berdasarkan Nilai Terakhir dan Waktu Pengerjaan Tercepat.</p>
+                            </div>
+                            <span class="px-3 py-1 bg-amber-100 text-amber-800 font-bold text-xs rounded-full">
+                                <i class="fa-solid fa-trophy mr-1 text-amber-500"></i> Leaderboard Kuis
+                            </span>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-50 text-slate-600 text-xs uppercase tracking-wider border-b border-slate-200">
+                                        <th class="p-4 rounded-l-xl">Posisi</th>
+                                        <th class="p-4">Nama Siswa</th>
+                                        <th class="p-4 text-center">Nilai Kuis (L1)</th>
+                                        <th class="p-4 text-center">Waktu Pengerjaan</th>
+                                        <th class="p-4 text-center rounded-r-xl">Waktu Submit</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-leaderboard-body" class="divide-y divide-slate-100 text-sm font-medium">
+                                    <!-- Rendered via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 4. DASHBOARD GURU                          -->
+        <!-- ========================================== -->
+        <section id="view-dashboard-guru" class="view-section flex-1 hidden">
+            <header class="bg-white border-b border-blue-100 sticky top-0 z-30 shadow-sm">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                    <div class="flex items-center gap-3 cursor-pointer" onclick="showView('view-landing')">
+                        <div class="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-sm">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <span class="font-extrabold text-base text-blue-600">Portal Guru - Bu Afifah</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="text-xs bg-teal-100 text-teal-800 px-3 py-1 rounded-full font-bold">Pengampu Aktif</span>
+                        <button onclick="logout()" class="text-xs text-red-500 hover:text-red-600 font-semibold flex items-center gap-1">
+                            <i class="fa-solid fa-right-from-bracket"></i> Keluar Portal
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+                <!-- Navigation Tabs Guru -->
+                <div class="flex gap-2 border-b border-blue-100 pb-2 overflow-x-auto custom-scrollbar">
+                    <button onclick="switchTabGuru('presensi')" id="tab-btn-guru-presensi" class="tab-btn-guru px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 bg-blue-600 text-white shadow-sm">
+                        <i class="fa-solid fa-clipboard-user"></i> Presensi Kehadiran
+                    </button>
+                    <button onclick="switchTabGuru('rekap')" id="tab-btn-guru-rekap" class="tab-btn-guru px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 bg-white text-slate-600 hover:bg-blue-50">
+                        <i class="fa-solid fa-table"></i> Rekap Nilai (LI-L2-L3)
+                    </button>
+                    <button onclick="switchTabGuru('latihan')" id="tab-btn-guru-latihan" class="tab-btn-guru px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 bg-white text-slate-600 hover:bg-blue-50">
+                        <i class="fa-solid fa-list-check"></i> Kelola Latihan Soal
+                    </button>
+                    <button onclick="switchTabGuru('kuis')" id="tab-btn-guru-kuis" class="tab-btn-guru px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 bg-white text-slate-600 hover:bg-blue-50">
+                        <i class="fa-solid fa-pen-to-square"></i> Kelola &amp; Kontrol Kuis
+                    </button>
+                    <button onclick="switchTabGuru('leaderboard-guru')" id="tab-btn-guru-leaderboard-guru" class="tab-btn-guru px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 bg-white text-slate-600 hover:bg-blue-50">
+                        <i class="fa-solid fa-trophy"></i> Peringkat Kuis
+                    </button>
+                    <button onclick="switchTabGuru('materi')" id="tab-btn-guru-materi" class="tab-btn-guru px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 bg-white text-slate-600 hover:bg-blue-50">
+                        <i class="fa-solid fa-folder-plus"></i> Kelola Bahan Ajar
+                    </button>
+                </div>
+
+                <!-- TAB GURU 1: PRESENSI KEHADIRAN SISWA -->
+                <div id="tab-guru-presensi" class="tab-guru-content space-y-6">
+                    <div class="bg-white rounded-3xl p-6 border border-blue-100 shadow-sm space-y-6">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-4">
+                            <div>
+                                <h3 class="font-bold text-lg text-slate-800">Presensi Kehadiran Mahasiswa / Siswa</h3>
+                                <p class="text-xs text-slate-500">Absen siswa yang tidak hadir (Alpa/Sakit/Izin), lalu gunakan tombol "Centang Hadir Selebihnya".</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button onclick="markAllPresent()" class="px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shadow-md transition-all">
+                                    <i class="fa-solid fa-check-double mr-1.5"></i> Centang Hadir Selebihnya
+                                </button>
+                                <button onclick="savePresensi()" class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md transition-all">
+                                    <i class="fa-solid fa-floppy-disk mr-1.5"></i> Simpan Presensi
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Ringkasan Stat Presensi -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="bg-teal-50 border border-teal-200 p-4 rounded-2xl text-center">
+                                <span class="text-xs font-bold text-teal-700">Hadir (H)</span>
+                                <h4 id="stat-hadir" class="text-2xl font-black text-teal-800 mt-1">0</h4>
+                            </div>
+                            <div class="bg-amber-50 border border-amber-200 p-4 rounded-2xl text-center">
+                                <span class="text-xs font-bold text-amber-700">Izin (I)</span>
+                                <h4 id="stat-izin" class="text-2xl font-black text-amber-800 mt-1">0</h4>
+                            </div>
+                            <div class="bg-blue-50 border border-blue-200 p-4 rounded-2xl text-center">
+                                <span class="text-xs font-bold text-blue-700">Sakit (S)</span>
+                                <h4 id="stat-sakit" class="text-2xl font-black text-blue-800 mt-1">0</h4>
+                            </div>
+                            <div class="bg-red-50 border border-red-200 p-4 rounded-2xl text-center">
+                                <span class="text-xs font-bold text-red-700">Alpa (A)</span>
+                                <h4 id="stat-alpa" class="text-2xl font-black text-red-800 mt-1">0</h4>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-50 text-slate-600 text-xs uppercase tracking-wider border-b border-slate-200">
+                                        <th class="p-4 rounded-l-xl">No</th>
+                                        <th class="p-4">Nama Siswa</th>
+                                        <th class="p-4 text-center">Status Presensi</th>
+                                        <th class="p-4 text-center rounded-r-xl">Keterangan SIMBOL</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-presensi-body" class="divide-y divide-slate-100 text-sm font-medium">
+                                    <!-- Rendered via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB GURU 2: REKAP NILAI (L1 - L2 - L3) -->
+                <div id="tab-guru-rekap" class="tab-guru-content space-y-6 hidden">
+                    <div class="bg-white rounded-3xl p-6 border border-blue-100 shadow-sm space-y-6">
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+                            <div>
+                                <h3 class="font-bold text-lg text-slate-800">Tabel Rekapitulasi Nilai (L1 - L2 - L3)</h3>
+                                <p class="text-xs text-slate-500">Nilai L1 terintegrasi otomatis dari Kuis Online Siswa.</p>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-50 text-slate-600 text-xs uppercase tracking-wider border-b border-slate-200">
+                                        <th class="p-4 rounded-l-xl">No</th>
+                                        <th class="p-4">Nama Siswa</th>
+                                        <th class="p-4 text-center">L1 (Kuis Online)</th>
+                                        <th class="p-4 text-center">L2</th>
+                                        <th class="p-4 text-center">L3</th>
+                                        <th class="p-4 text-center rounded-r-xl">Aksi Input</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-rekap-body" class="divide-y divide-slate-100 text-sm font-medium">
+                                    <!-- Rendered via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB GURU 3: KELOLA LATIHAN SOAL -->
+                <div id="tab-guru-latihan" class="tab-guru-content space-y-6 hidden">
+                    <div class="bg-white rounded-3xl p-6 border border-blue-100 shadow-sm space-y-6">
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+                            <div>
+                                <h3 class="font-bold text-lg text-slate-800">Manajemen Latihan Soal Mandiri</h3>
+                                <p class="text-xs text-slate-500">Buat soal latihan pilihan ganda yang terpisah dari soal kuis online.</p>
+                            </div>
+                        </div>
+
+                        <form onsubmit="handleTambahLatihan(event)" class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+                            <h4 class="font-bold text-sm text-slate-800"><i class="fa-solid fa-plus-circle text-blue-600 mr-1.5"></i> Tambah Soal Latihan Baru</h4>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Teks Pertanyaan Latihan</label>
+                                <textarea id="input-latihan-soal" required rows="2" placeholder="Tuliskan soal latihan..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+                            </div>
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Unggah Gambar dari Laptop (Opsional)</label>
+                                    <input type="file" id="input-latihan-file-img" accept="image/*" class="w-full px-3 py-1.5 border border-slate-200 rounded-xl text-xs bg-white">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Atau URL Gambar Online (Opsional)</label>
+                                    <input type="text" id="input-latihan-img" placeholder="https://domain.com/gambar.png" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs">
+                                </div>
+                            </div>
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Pilihan A</label>
+                                    <input type="text" id="input-latihan-a" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Pilihan B</label>
+                                    <input type="text" id="input-latihan-b" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Pilihan C</label>
+                                    <input type="text" id="input-latihan-c" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Pilihan D</label>
+                                    <input type="text" id="input-latihan-d" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs">
+                                </div>
+                            </div>
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Kunci Jawaban Benar</label>
+                                    <select id="select-latihan-kunci" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-bold">
+                                        <option value="0">A</option>
+                                        <option value="1">B</option>
+                                        <option value="2">C</option>
+                                        <option value="3">D</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Pembahasan (Opsional)</label>
+                                    <input type="text" id="input-latihan-pembahasan" placeholder="Tulis penjelasannya..." class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs">
+                                </div>
+                            </div>
+                            <button type="submit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs shadow-md">
+                                Simpan Soal Latihan
+                            </button>
+                        </form>
+
+                        <div id="container-guru-latihan-list" class="space-y-4">
+                            <!-- Rendered List Latihan -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB GURU 4: KELOLA & KONTROL KUIS ONLINE -->
+                <div id="tab-guru-kuis" class="tab-guru-content space-y-6 hidden">
+                    <div class="bg-white rounded-3xl p-6 border border-blue-100 shadow-sm space-y-6">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-4">
+                            <div>
+                                <h3 class="font-bold text-lg text-slate-800">Kontrol Fitur &amp; Bank Soal Kuis Online</h3>
+                                <p class="text-xs text-slate-500">Aktifkan atau nonaktifkan akses Kuis untuk siswa, serta tambahkan soal multimedia (Upload Gambar/Link).</p>
+                            </div>
+                            <div class="flex items-center gap-4 bg-slate-50 p-3 rounded-2xl border border-slate-200">
+                                <span class="text-xs font-bold text-slate-700">Status Fitur Kuis:</span>
+                                <button id="btn-toggle-quiz" onclick="toggleQuizStatus()" class="px-5 py-2 rounded-xl text-xs font-bold shadow-md transition-all bg-red-500 hover:bg-red-600 text-white">
+                                    NONAKTIF (Klik untuk Aktifkan)
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Form Tambah Soal Kuis -->
+                        <form onsubmit="handleTambahKuis(event)" class="bg-blue-50/50 p-6 rounded-2xl border border-blue-100 space-y-4">
+                            <h4 class="font-bold text-sm text-blue-900"><i class="fa-solid fa-square-plus mr-1.5"></i> Buat Soal Kuis Baru (Dukungan Upload Gambar/Link)</h4>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Teks Pertanyaan Kuis</label>
+                                <textarea id="input-kuis-soal" required rows="2" placeholder="Tuliskan soal kuis..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+                            </div>
+                            <div class="grid sm:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Unggah Gambar dari Laptop (Opsional)</label>
+                                    <input type="file" id="input-kuis-file-img" accept="image/*" class="w-full px-3 py-1.5 border border-slate-200 rounded-xl text-xs bg-white">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Atau URL Gambar Online (Opsional)</label>
+                                    <input type="text" id="input-kuis-img" placeholder="https://domain.com/gambar.png" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">URL Link Pendukung (Opsional)</label>
+                                    <input type="text" id="input-kuis-link" placeholder="https://link-pendukung.com" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs">
+                                </div>
+                            </div>
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Pilihan A</label>
+                                    <input type="text" id="input-kuis-a" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Pilihan B</label>
+                                    <input type="text" id="input-kuis-b" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Pilihan C</label>
+                                    <input type="text" id="input-kuis-c" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Pilihan D</label>
+                                    <input type="text" id="input-kuis-d" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Kunci Jawaban Benar</label>
+                                <select id="select-kuis-kunci" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-bold">
+                                    <option value="0">A</option>
+                                    <option value="1">B</option>
+                                    <option value="2">C</option>
+                                    <option value="3">D</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="px-6 py-2.5 bg-brand-orange hover:bg-orange-600 text-white font-bold rounded-xl text-xs shadow-md">
+                                Tambahkan ke Soal Kuis
+                            </button>
+                        </form>
+
+                        <div id="container-guru-kuis-list" class="space-y-4">
+                            <!-- Rendered List Kuis -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB GURU 5: PAPAN PERINGKAT KUIS (LEADERBOARD GURU) -->
+                <div id="tab-guru-leaderboard-guru" class="tab-guru-content space-y-6 hidden">
+                    <div class="bg-white rounded-3xl p-6 border border-blue-100 shadow-sm space-y-6">
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+                            <div>
+                                <h3 class="font-bold text-lg text-slate-800">Papan Peringkat Kuis (Klasemen Real-Time)</h3>
+                                <p class="text-xs text-slate-500">Hasil pengerjaan kuis siswa terurut dari nilai tertinggi dan waktu tercepat.</p>
+                            </div>
+                            <span class="px-3 py-1 bg-amber-100 text-amber-800 font-bold text-xs rounded-full">
+                                <i class="fa-solid fa-trophy mr-1 text-amber-500"></i> Klasemen Guru
+                            </span>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-50 text-slate-600 text-xs uppercase tracking-wider border-b border-slate-200">
+                                        <th class="p-4 rounded-l-xl">Posisi</th>
+                                        <th class="p-4">Nama Siswa</th>
+                                        <th class="p-4 text-center">Nilai Kuis (L1)</th>
+                                        <th class="p-4 text-center">Waktu Pengerjaan</th>
+                                        <th class="p-4 text-center rounded-r-xl">Waktu Submit</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-guru-leaderboard-body" class="divide-y divide-slate-100 text-sm font-medium">
+                                    <!-- Rendered via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB GURU 6: KELOLA BAHAN AJAR -->
+                <div id="tab-guru-materi" class="tab-guru-content space-y-6 hidden">
+                    <div class="bg-white rounded-3xl p-6 border border-blue-100 shadow-sm space-y-6">
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+                            <div>
+                                <h3 class="font-bold text-lg text-slate-800">Manajemen Bahan Ajar &amp; Modul</h3>
+                                <p class="text-xs text-slate-500">Tambahkan atau hapus link bahan ajar PDF/Drive yang tampil di portal siswa.</p>
+                            </div>
+                        </div>
+
+                        <form onsubmit="handleTambahMateri(event)" class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+                            <h4 class="font-bold text-sm text-slate-800"><i class="fa-solid fa-folder-plus text-blue-600 mr-1.5"></i> Tambah Bahan Ajar Baru</h4>
+                            <div class="grid sm:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Judul Bahan Ajar</label>
+                                    <input type="text" id="input-materi-judul" required placeholder="Contoh: Modul Dilatasi" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Kategori / Tipe</label>
+                                    <input type="text" id="input-materi-tipe" required placeholder="PDF / PPT / Video" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">URL Link File (Google Drive / PDF)</label>
+                                    <input type="text" id="input-materi-url" required placeholder="https://drive.google.com/..." class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs">
+                                </div>
+                            </div>
+                            <button type="submit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs shadow-md">
+                                Simpan Bahan Ajar
+                            </button>
+                        </form>
+
+                        <div id="container-guru-materi-list" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Rendered Materi Guru -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // DATA STATE INITIALIZATION (LocalStorage Integration)
+        const DEFAULT_STUDENTS = [
+            "Nurul Usna Amelia", "Deswinta Adelia Putri", "Nurfitri Qalbi", "Zulfitri",
+            "Rasti", "Salsabila Dwi Amaliyah H", "Salman Fauzan. T", "Khusnul Khatimah",
+            "Annisa Auliya Suhbar", "Mahijrah", "Vina Amir", "Syailah", "Feri Gustian. Rm",
+            "Nazwa Nur Fathiyah. R", "Nasriah Ramadhoni", "Nur Adela Malika Putri",
+            "Ririn Al Hudah", "A.Reski Amaliyah", "Fara Afryani"
+        ];
+
+        let state = {
+            currentView: 'view-landing',
+            currentUser: null, // { type: 'siswa'|'guru', name: string }
+            quizActive: localStorage.getItem('quizActive') === 'true', // Quiz Active toggle
+            presensi: JSON.parse(localStorage.getItem('presensi')) || {}, // { studentName: 'H'|'A'|'S'|'I' }
+            rekapNilai: JSON.parse(localStorage.getItem('rekapNilai')) || {}, // { studentName: { L1, L2, L3 } }
+            quizResults: JSON.parse(localStorage.getItem('quizResults')) || {}, // { studentName: { score, timeSec, timestamp } }
+            materiList: JSON.parse(localStorage.getItem('materiList')) || [
+                {
+                    judul: "BUKU RUJUKAN SISWA KELAS IX",
+                    tipe: "PDF Buku",
+                    url: "https://drive.google.com/file/d/1lckfYsMoYECXsAXCIHeHByjqlYbkdtOV/view?usp=sharing"
+                },
+                {
+                    judul: "PPT TRANSLASI",
+                    tipe: "Modul LKPD",
+                    url: "https://drive.google.com/file/d/1Vm-XDLICn27pVJKq2cubG4LEFnb58I77/view?usp=drive_link"
+                }
+            ],
+            latihanSoal: JSON.parse(localStorage.getItem('latihanSoal')) || [
+                {
+                    soal: "1. Perhatikan peristiwa-peristiwa berikut! Peristiwa yang merupakan contoh translasi (pergeseran) adalah ...",
+                    img: "",
+                    opsi: [
+                        "Daun pintu yang dibuka dan ditutup",
+                        "Jarum jam dinding yang berputar",
+                        "Lift yang bergerak naik dari lantai 1 ke lantai 4",
+                        "Kincir angin yang sedang berputar"
+                    ],
+                    kunci: 2,
+                    pembahasan: "Translasi adalah pergeseran tanpa mengubah bentuk dan arah. Gerakan lift naik lurus merupakan pergeseran."
+                },
+                {
+                    soal: "2. Pernyataan yang benar mengenai hasil translasi suatu bangun datar adalah ...",
+                    img: "",
+                    opsi: [
+                        "Bentuknya sama, tetapi ukurannya berbeda",
+                        "Bentuk dan ukurannya sama, tetapi posisinya berubah",
+                        "Ukurannya sama, tetapi bentuknya berubah",
+                        "Bentuk, ukuran, dan posisinya sama dengan bangun semula"
+                    ],
+                    kunci: 1,
+                    pembahasan: "Translasi hanya menggeser posisi bangun datar tanpa merubah bentuk maupun ukurannya."
+                },
+                {
+                    soal: "3. Bayangan titik A(−2, 5) oleh translasi (3,-4) adalah ...",
+                    img: "",
+                    opsi: [
+                        "(1, 1)",
+                        "(−5, 9)",
+                        "(1, 9)",
+                        "(−5, 1)"
+                    ],
+                    kunci: 0,
+                    pembahasan: "A' = (-2 + 3, 5 + (-4)) = (1, 1)."
+                }
+            ],
+            kuisSoal: JSON.parse(localStorage.getItem('kuisSoal')) || [
+                {
+                    soal: "1. Titik C(−3, 2) dipetakan ke titik C'(4, −1) oleh suatu translasi T(a,b). Komponen translasi T tersebut adalah ...",
+                    img: "",
+                    link: "",
+                    opsi: ["(7, 3)", "(-7, 3)", "(7, -3)", "(1, 1)"],
+                    kunci: 2
+                },
+                {
+                    soal: "2. Titik P(2, -5) ditranslasikan oleh T(-3, 4). Koordinat bayangan titik P adalah ...",
+                    img: "",
+                    link: "",
+                    opsi: ["(-1, -1)", "(5, -9)", "(-1, 1)", "(1, -1)"],
+                    kunci: 0
+                }
+            ]
+        };
+
+        // Initialize Default Student Data if Empty
+        DEFAULT_STUDENTS.forEach(name => {
+            if (!state.presensi[name]) state.presensi[name] = 'H';
+            if (!state.rekapNilai[name]) {
+                state.rekapNilai[name] = { L1: '-', L2: 0, L3: 0 };
+            }
+        });
+
+        // Cartesian Canvas Variables
+        let canvasPoints = [];
+
+        // Save State to LocalStorage
+        function saveData() {
+            localStorage.setItem('quizActive', state.quizActive);
+            localStorage.setItem('presensi', JSON.stringify(state.presensi));
+            localStorage.setItem('rekapNilai', JSON.stringify(state.rekapNilai));
+            localStorage.setItem('quizResults', JSON.stringify(state.quizResults));
+            localStorage.setItem('materiList', JSON.stringify(state.materiList));
+            localStorage.setItem('latihanSoal', JSON.stringify(state.latihanSoal));
+            localStorage.setItem('kuisSoal', JSON.stringify(state.kuisSoal));
+        }
+
+        // Helper function to read file as Data URL (Base64)
+        function readFileAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // DOM Loaded Init
+        window.addEventListener('DOMContentLoaded', () => {
+            populateStudentDropdown();
+            renderAllViews();
+        });
+
+        function populateStudentDropdown() {
+            const select = document.getElementById('select-siswa-name');
+            select.innerHTML = '<option value="">-- Pilih Nama Siswa --</option>';
+            DEFAULT_STUDENTS.forEach(name => {
+                const opt = document.createElement('option');
+                opt.value = name;
+                opt.textContent = name;
+                select.appendChild(opt);
+            });
+        }
+
+        function syncSiswaInput(val) {
+            if (val) document.getElementById('input-siswa-name').value = val;
+        }
+
+        // View Router
+        function showView(viewId) {
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
+            document.getElementById(viewId).classList.remove('hidden');
+            state.currentView = viewId;
+            if (viewId === 'view-dashboard-siswa') {
+                renderSiswaDashboard();
+            } else if (viewId === 'view-dashboard-guru') {
+                renderGuruDashboard();
+            }
+        }
+
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        // Auth Handlers
+        function handleLoginSiswa(e) {
+            e.preventDefault();
+            const name = document.getElementById('input-siswa-name').value.trim();
+            if (!name) return;
+            state.currentUser = { type: 'siswa', name: name };
+            closeModal('modal-login-siswa');
+            showView('view-dashboard-siswa');
+        }
+
+        function handleLoginGuru(e) {
+            e.preventDefault();
+            const pin = document.getElementById('input-pin-guru').value.trim();
+            if (pin === '262626') {
+                document.getElementById('error-pin-guru').classList.add('hidden');
+                state.currentUser = { type: 'guru', name: 'Bu Afifah' };
+                closeModal('modal-login-guru');
+                showView('view-dashboard-guru');
+            } else {
+                document.getElementById('error-pin-guru').classList.remove('hidden');
+            }
+        }
+
+        function logout() {
+            state.currentUser = null;
+            showView('view-landing');
+        }
+
+        // SISWA TABS SWITCHING
+        function switchTabSiswa(tabName) {
+            document.querySelectorAll('.tab-btn-siswa').forEach(btn => {
+                btn.className = 'tab-btn-siswa px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 bg-white text-slate-600 hover:bg-blue-50';
+            });
+            document.querySelectorAll('.tab-siswa-content').forEach(c => c.classList.add('hidden'));
+
+            const targetBtn = document.getElementById(`tab-btn-${tabName}`);
+            if (targetBtn) targetBtn.className = 'tab-btn-siswa px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 bg-blue-600 text-white shadow-sm';
+            
+            const targetContent = document.getElementById(`tab-content-${tabName}`);
+            if (targetContent) targetContent.classList.remove('hidden');
+
+            if (tabName === 'cartesian') drawCartesianGrid();
+        }
+
+        // GURU TABS SWITCHING
+        function switchTabGuru(tabName) {
+            document.querySelectorAll('.tab-btn-guru').forEach(btn => {
+                btn.className = 'tab-btn-guru px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 bg-white text-slate-600 hover:bg-blue-50';
+            });
+            document.querySelectorAll('.tab-guru-content').forEach(c => c.classList.add('hidden'));
+
+            document.getElementById(`tab-btn-guru-${tabName}`).className = 'tab-btn-guru px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 bg-blue-600 text-white shadow-sm';
+            document.getElementById(`tab-guru-${tabName}`).classList.remove('hidden');
+        }
+
+        // RENDER LOGIC
+        function renderAllViews() {
+            renderMateriSiswa();
+            renderLatihanSiswa();
+            renderQuizSiswa();
+            renderLeaderboard();
+            renderPresensiGuru();
+            renderRekapGuru();
+            renderLatihanGuru();
+            renderKuisGuru();
+            renderMateriGuru();
+        }
+
+        function renderSiswaDashboard() {
+            if (!state.currentUser) return;
+            document.getElementById('label-nama-siswa').textContent = state.currentUser.name;
+            document.getElementById('welcome-nama-siswa').textContent = state.currentUser.name;
+            renderMateriSiswa();
+            renderLatihanSiswa();
+            renderQuizSiswa();
+            renderLeaderboard();
+        }
+
+        function renderGuruDashboard() {
+            renderPresensiGuru();
+            renderRekapGuru();
+            renderLatihanGuru();
+            renderKuisGuru();
+            renderMateriGuru();
+            renderLeaderboard();
+        }
+
+        // 1. MATERI RENDER
+        function renderMateriSiswa() {
+            const container = document.getElementById('container-materi-list');
+            container.innerHTML = '';
+            state.materiList.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-6 rounded-3xl border border-blue-100 shadow-sm space-y-4 hover:shadow-md transition-all";
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-[10px] font-extrabold uppercase">${item.tipe}</span>
+                        <i class="fa-solid fa-folder-open text-teal-500"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-800 text-base">${item.judul}</h4>
+                    <a href="${item.url}" target="_blank" class="w-full py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white shadow-md">
+                        <i class="fa-solid fa-circle-arrow-down"></i> Unduh / Buka File
+                    </a>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderMateriGuru() {
+            const container = document.getElementById('container-guru-materi-list');
+            container.innerHTML = '';
+            state.materiList.forEach((item, idx) => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2 relative";
+                card.innerHTML = `
+                    <button onclick="deleteMateri(${idx})" class="absolute top-3 right-3 text-red-500 hover:text-red-700 text-xs font-bold">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                    <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-[10px] font-bold">${item.tipe}</span>
+                    <h5 class="font-bold text-slate-800 text-xs">${item.judul}</h5>
+                    <a href="${item.url}" target="_blank" class="text-[11px] text-blue-600 underline truncate block">${item.url}</a>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function handleTambahMateri(e) {
+            e.preventDefault();
+            const judul = document.getElementById('input-materi-judul').value.trim();
+            const tipe = document.getElementById('input-materi-tipe').value.trim();
+            const url = document.getElementById('input-materi-url').value.trim();
+            state.materiList.push({ judul, tipe, url });
+            saveData();
+            renderMateriSiswa();
+            renderMateriGuru();
+            e.target.reset();
+        }
+
+        function deleteMateri(idx) {
+            state.materiList.splice(idx, 1);
+            saveData();
+            renderMateriSiswa();
+            renderMateriGuru();
+        }
+
+        // 2. LATIHAN SOAL SISWA & GURU
+        function renderLatihanSiswa() {
+            const container = document.getElementById('container-latihan-siswa');
+            container.innerHTML = '';
+            state.latihanSoal.forEach((item, idx) => {
+                const box = document.createElement('div');
+                box.className = "bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3";
+                
+                let opsiHtml = item.opsi.map((opt, oIdx) => {
+                    const isKey = oIdx === item.kunci;
+                    return `
+                        <div class="p-2.5 rounded-xl border ${isKey ? 'bg-teal-50 border-teal-300 text-teal-800 font-bold' : 'bg-white border-slate-200 text-slate-600'}">
+                            ${opt} ${isKey ? '✓ (Kunci)' : ''}
+                        </div>
+                    `;
+                }).join('');
+
+                box.innerHTML = `
+                    <p class="text-sm font-bold text-slate-800">${item.soal}</p>
+                    ${item.img ? `<img src="${item.img}" class="max-h-52 rounded-xl border border-slate-200 my-2">` : ''}
+                    <div class="grid sm:grid-cols-2 gap-2 text-xs">${opsiHtml}</div>
+                    <div class="bg-blue-50/60 p-3 rounded-xl border border-blue-100 text-xs text-slate-700">
+                        <strong>Pembahasan:</strong> ${item.pembahasan || 'Pembahasan belum tersedia.'}
+                    </div>
+                `;
+                container.appendChild(box);
+            });
+        }
+
+        function renderLatihanGuru() {
+            const container = document.getElementById('container-guru-latihan-list');
+            container.innerHTML = '';
+            state.latihanSoal.forEach((item, idx) => {
+                const box = document.createElement('div');
+                box.className = "bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2 relative";
+                box.innerHTML = `
+                    <button onclick="deleteLatihan(${idx})" class="absolute top-3 right-3 text-red-500 hover:text-red-700 text-xs font-bold">
+                        <i class="fa-solid fa-trash"></i> Hapus
+                    </button>
+                    <p class="text-xs font-bold text-slate-800 pr-12">${item.soal}</p>
+                    ${item.img ? `<p class="text-[11px] text-blue-600"><i class="fa-solid fa-image"></i> Media Gambar Terpasang</p>` : ''}
+                    <p class="text-[11px] text-teal-700 font-bold">Kunci: Opsi ${String.fromCharCode(65 + item.kunci)} (${item.opsi[item.kunci]})</p>
+                `;
+                container.appendChild(box);
+            });
+        }
+
+        async function handleTambahLatihan(e) {
+            e.preventDefault();
+            const soal = document.getElementById('input-latihan-soal').value.trim();
+            const urlImg = document.getElementById('input-latihan-img').value.trim();
+            const fileInput = document.getElementById('input-latihan-file-img');
+            let finalImg = urlImg;
+
+            if (fileInput.files && fileInput.files[0]) {
+                try {
+                    finalImg = await readFileAsDataURL(fileInput.files[0]);
+                } catch(err) {
+                    console.error("Gagal membaca file gambar", err);
+                }
+            }
+
+            const a = document.getElementById('input-latihan-a').value.trim();
+            const b = document.getElementById('input-latihan-b').value.trim();
+            const c = document.getElementById('input-latihan-c').value.trim();
+            const d = document.getElementById('input-latihan-d').value.trim();
+            const kunci = parseInt(document.getElementById('select-latihan-kunci').value);
+            const pembahasan = document.getElementById('input-latihan-pembahasan').value.trim();
+
+            state.latihanSoal.push({
+                soal,
+                img: finalImg,
+                opsi: [a, b, c, d],
+                kunci,
+                pembahasan
+            });
+            saveData();
+            renderLatihanSiswa();
+            renderLatihanGuru();
+            e.target.reset();
+        }
+
+        function deleteLatihan(idx) {
+            state.latihanSoal.splice(idx, 1);
+            saveData();
+            renderLatihanSiswa();
+            renderLatihanGuru();
+        }
+
+        // 3. KUIS ONLINE SISWA & GURU
+        let quizTimerInterval = null;
+        let quizTimeSeconds = 0;
+
+        function renderQuizSiswa() {
+            const badge = document.getElementById('quiz-status-badge-siswa');
+            const inactiveBox = document.getElementById('quiz-inactive-box');
+            const activeBox = document.getElementById('quiz-active-box');
+            const container = document.getElementById('quiz-questions-container');
+
+            if (state.quizActive) {
+                badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-teal-100 text-teal-700";
+                badge.textContent = "Status: AKTIF (Dapat Dikerjakan)";
+                inactiveBox.classList.add('hidden');
+                activeBox.classList.remove('hidden');
+
+                // Render questions
+                container.innerHTML = '';
+                state.kuisSoal.forEach((q, qIdx) => {
+                    const item = document.createElement('div');
+                    item.className = "bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3";
+
+                    let mediaHtml = '';
+                    if (q.img) mediaHtml += `<img src="${q.img}" class="max-h-52 rounded-xl border border-slate-200 mb-2">`;
+                    if (q.link) mediaHtml += `<a href="${q.link}" target="_blank" class="text-xs text-blue-600 underline block mb-2"><i class="fa-solid fa-link"></i> Buka Link Pendukung Soal</a>`;
+
+                    let opsiHtml = q.opsi.map((opt, oIdx) => `
+                        <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 bg-white cursor-pointer hover:bg-blue-50 transition-all text-xs font-semibold text-slate-700">
+                            <input type="radio" name="kuis-opt-${qIdx}" value="${oIdx}" class="text-blue-600 focus:ring-blue-400">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('');
+
+                    item.innerHTML = `
+                        <p class="text-sm font-bold text-slate-800">${q.soal}</p>
+                        ${mediaHtml}
+                        <div class="grid sm:grid-cols-2 gap-2">${opsiHtml}</div>
+                    `;
+                    container.appendChild(item);
+                });
+
+                // Start Timer
+                startQuizTimer();
+            } else {
+                badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-600";
+                badge.textContent = "Status: NONAKTIF";
+                inactiveBox.classList.remove('hidden');
+                activeBox.classList.add('hidden');
+                stopQuizTimer();
+            }
+        }
+
+        function startQuizTimer() {
+            stopQuizTimer();
+            quizTimeSeconds = 0;
+            const timerDisplay = document.getElementById('quiz-timer-display');
+            quizTimerInterval = setInterval(() => {
+                quizTimeSeconds++;
+                const mins = Math.floor(quizTimeSeconds / 60).toString().padStart(2, '0');
+                const secs = (quizTimeSeconds % 60).toString().padStart(2, '0');
+                if (timerDisplay) timerDisplay.textContent = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function stopQuizTimer() {
+            if (quizTimerInterval) clearInterval(quizTimerInterval);
+        }
+
+        function submitQuizSiswa() {
+            if (!state.currentUser) return;
+            const studentName = state.currentUser.name;
+
+            let scoreCount = 0;
+            state.kuisSoal.forEach((q, qIdx) => {
+                const selected = document.querySelector(`input[name="kuis-opt-${qIdx}"]:checked`);
+                if (selected && parseInt(selected.value) === q.kunci) {
+                    scoreCount++;
+                }
+            });
+
+            const finalScore = state.kuisSoal.length > 0 ? Math.round((scoreCount / state.kuisSoal.length) * 100) : 0;
+
+            // Simpan Hasil
+            state.quizResults[studentName] = {
+                score: finalScore,
+                timeSec: quizTimeSeconds,
+                timestamp: new Date().toLocaleTimeString()
+            };
+
+            // Integrasi Otomatis ke Rekap Portal Guru (Kolom L1)
+            if (!state.rekapNilai[studentName]) {
+                state.rekapNilai[studentName] = { L1: finalScore, L2: 0, L3: 0 };
+            } else {
+                state.rekapNilai[studentName].L1 = finalScore;
+            }
+
+            saveData();
+            stopQuizTimer();
+
+            alert(`Kuis Berhasil Dikirim!\n\nNama: ${studentName}\nNilai (L1): ${finalScore}\nWaktu Pengerjaan: ${quizTimeSeconds} detik`);
+            renderLeaderboard();
+            renderRekapGuru();
+            switchTabSiswa('leaderboard');
+        }
+
+        function renderKuisGuru() {
+            const btnToggle = document.getElementById('btn-toggle-quiz');
+            if (state.quizActive) {
+                btnToggle.className = "px-5 py-2 rounded-xl text-xs font-bold shadow-md transition-all bg-teal-600 hover:bg-teal-700 text-white";
+                btnToggle.textContent = "AKTIF (Klik untuk Nonaktifkan)";
+            } else {
+                btnToggle.className = "px-5 py-2 rounded-xl text-xs font-bold shadow-md transition-all bg-red-500 hover:bg-red-600 text-white";
+                btnToggle.textContent = "NONAKTIF (Klik untuk Aktifkan)";
+            }
+
+            const container = document.getElementById('container-guru-kuis-list');
+            container.innerHTML = '';
+            state.kuisSoal.forEach((item, idx) => {
+                const box = document.createElement('div');
+                box.className = "bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2 relative";
+                box.innerHTML = `
+                    <button onclick="deleteKuis(${idx})" class="absolute top-3 right-3 text-red-500 hover:text-red-700 text-xs font-bold">
+                        <i class="fa-solid fa-trash"></i> Hapus
+                    </button>
+                    <p class="text-xs font-bold text-slate-800 pr-12">${item.soal}</p>
+                    ${item.img ? `<p class="text-[11px] text-blue-600"><i class="fa-solid fa-image"></i> Media Gambar Terpasang</p>` : ''}
+                    ${item.link ? `<p class="text-[11px] text-blue-600"><i class="fa-solid fa-link"></i> Link: ${item.link}</p>` : ''}
+                    <p class="text-[11px] text-teal-700 font-bold">Kunci Jawaban: Opsi ${String.fromCharCode(65 + item.kunci)} (${item.opsi[item.kunci]})</p>
+                `;
+                container.appendChild(box);
+            });
+        }
+
+        function toggleQuizStatus() {
+            state.quizActive = !state.quizActive;
+            saveData();
+            renderKuisGuru();
+            renderQuizSiswa();
+        }
+
+        async function handleTambahKuis(e) {
+            e.preventDefault();
+            const soal = document.getElementById('input-kuis-soal').value.trim();
+            const urlImg = document.getElementById('input-kuis-img').value.trim();
+            const fileInput = document.getElementById('input-kuis-file-img');
+            let finalImg = urlImg;
+
+            if (fileInput.files && fileInput.files[0]) {
+                try {
+                    finalImg = await readFileAsDataURL(fileInput.files[0]);
+                } catch(err) {
+                    console.error("Gagal membaca file gambar", err);
+                }
+            }
+
+            const link = document.getElementById('input-kuis-link').value.trim();
+            const a = document.getElementById('input-kuis-a').value.trim();
+            const b = document.getElementById('input-kuis-b').value.trim();
+            const c = document.getElementById('input-kuis-c').value.trim();
+            const d = document.getElementById('input-kuis-d').value.trim();
+            const kunci = parseInt(document.getElementById('select-kuis-kunci').value);
+
+            state.kuisSoal.push({
+                soal,
+                img: finalImg,
+                link,
+                opsi: [a, b, c, d],
+                kunci
+            });
+            saveData();
+            renderKuisGuru();
+            renderQuizSiswa();
+            e.target.reset();
+        }
+
+        function deleteKuis(idx) {
+            state.kuisSoal.splice(idx, 1);
+            saveData();
+            renderKuisGuru();
+            renderQuizSiswa();
+        }
+
+        // 4. LEADERBOARD (UNTUK SISWA DAN GURU)
+        function renderLeaderboard() {
+            const tbodySiswa = document.getElementById('table-leaderboard-body');
+            const tbodyGuru = document.getElementById('table-guru-leaderboard-body');
+
+            const list = Object.keys(state.quizResults).map(name => ({
+                name,
+                ...state.quizResults[name]
+            }));
+
+            // Sort: High score first, then lowest timeSec
+            list.sort((a, b) => {
+                if (b.score !== a.score) return b.score - a.score;
+                return a.timeSec - b.timeSec;
+            });
+
+            const generateRowsHtml = () => {
+                if (list.length === 0) {
+                    return `<tr><td colspan="5" class="p-4 text-center text-slate-400 italic">Belum ada siswa yang mengerjakan kuis.</td></tr>`;
+                }
+                return list.map((item, idx) => {
+                    let badgeRank = `#${idx + 1}`;
+                    if (idx === 0) badgeRank = `<span class="px-2 py-1 rounded bg-amber-100 text-amber-800 font-bold"><i class="fa-solid fa-trophy text-amber-500 mr-1"></i> Juara 1</span>`;
+                    else if (idx === 1) badgeRank = `<span class="px-2 py-1 rounded bg-slate-200 text-slate-700 font-bold"><i class="fa-solid fa-trophy text-slate-400 mr-1"></i> Juara 2</span>`;
+                    else if (idx === 2) badgeRank = `<span class="px-2 py-1 rounded bg-orange-100 text-amber-900 font-bold"><i class="fa-solid fa-trophy text-amber-700 mr-1"></i> Juara 3</span>`;
+
+                    return `
+                        <tr>
+                            <td class="p-4">${badgeRank}</td>
+                            <td class="p-4 font-bold text-slate-800">${item.name}</td>
+                            <td class="p-4 text-center font-bold text-blue-600">${item.score}</td>
+                            <td class="p-4 text-center font-mono text-xs">${item.timeSec} detik</td>
+                            <td class="p-4 text-center text-xs text-slate-500">${item.timestamp}</td>
+                        </tr>
+                    `;
+                }).join('');
+            };
+
+            const htmlContent = generateRowsHtml();
+            if (tbodySiswa) tbodySiswa.innerHTML = htmlContent;
+            if (tbodyGuru) tbodyGuru.innerHTML = htmlContent;
+        }
+
+        // 5. PORTAL GURU: TABEL PRESENSI KEHADIRAN
+        function renderPresensiGuru() {
+            const tbody = document.getElementById('table-presensi-body');
+            tbody.innerHTML = '';
+
+            let countH = 0, countI = 0, countS = 0, countA = 0;
+
+            DEFAULT_STUDENTS.forEach((name, idx) => {
+                const status = state.presensi[name] || 'H';
+                if (status === 'H') countH++;
+                if (status === 'I') countI++;
+                if (status === 'S') countS++;
+                if (status === 'A') countA++;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-4 font-bold text-slate-400 text-xs">${idx + 1}</td>
+                    <td class="p-4 font-bold text-slate-800">${name}</td>
+                    <td class="p-4 text-center">
+                        <select onchange="updatePresensiSiswa('${name}', this.value)" class="px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold focus:outline-none">
+                            <option value="H" ${status === 'H' ? 'selected' : ''}>Hadir (H)</option>
+                            <option value="A" ${status === 'A' ? 'selected' : ''}>Alpa (A)</option>
+                            <option value="S" ${status === 'S' ? 'selected' : ''}>Sakit (S)</option>
+                            <option value="I" ${status === 'I' ? 'selected' : ''}>Izin (I)</option>
+                        </select>
+                    </td>
+                    <td class="p-4 text-center">
+                        <span class="px-3 py-1 rounded-full text-xs font-black ${
+                            status === 'H' ? 'bg-teal-100 text-teal-800' :
+                            status === 'A' ? 'bg-red-100 text-red-600' :
+                            status === 'S' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-800'
+                        }">
+                            SIMBOL: ${status}
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('stat-hadir').textContent = countH;
+            document.getElementById('stat-izin').textContent = countI;
+            document.getElementById('stat-sakit').textContent = countS;
+            document.getElementById('stat-alpa').textContent = countA;
+        }
+
+        function updatePresensiSiswa(name, val) {
+            state.presensi[name] = val;
+            saveData();
+            renderPresensiGuru();
+        }
+
+        function markAllPresent() {
+            DEFAULT_STUDENTS.forEach(name => {
+                if (!state.presensi[name] || state.presensi[name] !== 'A' && state.presensi[name] !== 'S' && state.presensi[name] !== 'I') {
+                    state.presensi[name] = 'H';
+                }
+            });
+            saveData();
+            renderPresensiGuru();
+            alert('Semua siswa selebihnya telah dicentang HADIR (H)!');
+        }
+
+        function savePresensi() {
+            saveData();
+            alert('Presensi Kehadiran berhasil disimpan.');
+        }
+
+        // 6. PORTAL GURU: TABEL REKAP NILAI (LI, L2, L3)
+        function renderRekapGuru() {
+            const tbody = document.getElementById('table-rekap-body');
+            tbody.innerHTML = '';
+
+            DEFAULT_STUDENTS.forEach((name, idx) => {
+                const item = state.rekapNilai[name] || { L1: '-', L2: 0, L3: 0 };
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-4 font-bold text-slate-400 text-xs">${idx + 1}</td>
+                    <td class="p-4 font-bold text-slate-800">${name}</td>
+                    <td class="p-4 text-center font-bold text-blue-600 bg-blue-50/50">${item.L1}</td>
+                    <td class="p-4 text-center">
+                        <input type="number" value="${item.L2}" onchange="updateNilaiL2L3('${name}', 'L2', this.value)" class="w-16 px-2 py-1 text-center border border-slate-200 rounded-lg text-xs font-bold">
+                    </td>
+                    <td class="p-4 text-center">
+                        <input type="number" value="${item.L3}" onchange="updateNilaiL2L3('${name}', 'L3', this.value)" class="w-16 px-2 py-1 text-center border border-slate-200 rounded-lg text-xs font-bold">
+                    </td>
+                    <td class="p-4 text-center text-xs text-slate-400">Ter-update</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateNilaiL2L3(name, field, val) {
+            if (!state.rekapNilai[name]) {
+                state.rekapNilai[name] = { L1: '-', L2: 0, L3: 0 };
+            }
+            state.rekapNilai[name][field] = parseInt(val) || 0;
+            saveData();
+        }
+
+        // 7. LAB CARTESIAN CANVAS ENGINE
+        function drawCartesianGrid() {
+            const canvas = document.getElementById('cartesianCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            ctx.clearRect(0, 0, width, height);
+
+            const gridSize = 25;
+            const centerX = width / 2;
+            const centerY = height / 2;
+
+            ctx.strokeStyle = '#334155';
+            ctx.lineWidth = 1;
+
+            for (let x = 0; x < width; x += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+                ctx.stroke();
+            }
+
+            for (let y = 0; y < height; y += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+
+            ctx.strokeStyle = '#60A5FA';
+            ctx.lineWidth = 2;
+
+            ctx.beginPath();
+            ctx.moveTo(centerX, 0);
+            ctx.lineTo(centerX, height);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            ctx.lineTo(width, centerY);
+            ctx.stroke();
+
+            const shiftA = parseInt(document.getElementById('shift-a').value) || 0;
+            const shiftB = parseInt(document.getElementById('shift-b').value) || 0;
+
+            const listElem = document.getElementById('list-cartesian-points');
+            listElem.innerHTML = '';
+
+            if (canvasPoints.length === 0) {
+                listElem.innerHTML = `<p class="text-slate-400 italic">Klik pada bidang Kartesius untuk menambahkan titik!</p>`;
+                return;
+            }
+
+            ctx.fillStyle = '#FF7A18';
+            ctx.strokeStyle = '#FF7A18';
+            ctx.lineWidth = 2;
+
+            if (canvasPoints.length > 1) {
+                ctx.beginPath();
+                ctx.moveTo(centerX + canvasPoints[0].x * gridSize, centerY - canvasPoints[0].y * gridSize);
+                for (let i = 1; i < canvasPoints.length; i++) {
+                    ctx.lineTo(centerX + canvasPoints[i].x * gridSize, centerY - canvasPoints[i].y * gridSize);
+                }
+                ctx.closePath();
+                ctx.stroke();
+            }
+
+            canvasPoints.forEach((pt, i) => {
+                const px = centerX + pt.x * gridSize;
+                const py = centerY - pt.y * gridSize;
+                ctx.beginPath();
+                ctx.arc(px, py, 5, 0, Math.PI * 2);
+                ctx.fill();
+
+                const tx = pt.x + shiftA;
+                const ty = pt.y + shiftB;
+                const tpx = centerX + tx * gridSize;
+                const tpy = centerY - ty * gridSize;
+
+                ctx.fillStyle = '#00A86B';
+                ctx.beginPath();
+                ctx.arc(tpx, tpy, 5, 0, Math.PI * 2);
+                ctx.fill();
+
+                listElem.innerHTML += `
+                    <div class="p-2 rounded-xl bg-slate-50 border border-slate-200 flex justify-between">
+                        <span>P${i+1}(${pt.x}, ${pt.y})</span>
+                        <span class="font-bold text-teal-700">➔ P${i+1}'(${tx}, ${ty})</span>
+                    </div>
+                `;
+                ctx.fillStyle = '#FF7A18';
+            });
+        }
+
+        function clearCanvasPoints() {
+            canvasPoints = [];
+            drawCartesianGrid();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('cartesianCanvas');
+            if (canvas) {
+                canvas.addEventListener('click', (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    const clickX = e.clientX - rect.left;
+                    const clickY = e.clientY - rect.top;
+
+                    const gridSize = 25;
+                    const centerX = canvas.width / 2;
+                    const centerY = canvas.height / 2;
+
+                    const gridX = Math.round((clickX - centerX) / gridSize);
+                    const gridY = Math.round((centerY - clickY) / gridSize);
+
+                    canvasPoints.push({ x: gridX, y: gridY });
+                    drawCartesianGrid();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
